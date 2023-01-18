@@ -1,23 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Login  from "./components/Login";
+import { useEffect ,useState} from 'react'
+import { getToken, loginUrl } from './utilities/spotify'
+import { useNavigate } from 'react-router-dom'
+import SpotifyWebApi from 'spotify-web-api-js'
+import { useDataLayerValue } from "./context/Datalayer";
+import Home from "./components/Home";
 function App() {
+  const navigate =useNavigate()
+  const spotify =new SpotifyWebApi()
+    const [{token,user},dispatch]=useDataLayerValue()
+    console.log(user
+      )
+
+    useEffect(()=>{
+
+        const token=getToken()
+        let myToken=token.access_token;
+        window.location.hash=''
+        if(myToken){
+            dispatch({
+              type:'SET_TOKEN',
+              token:myToken
+            })
+            window.localStorage.setItem('token',myToken)
+            spotify.setAccessToken(myToken)
+            //Get User data
+            spotify.getMe().then(
+              function (data) {
+                dispatch({
+                  type:'SET_USER',
+                  user:data
+                })
+              },
+
+            );
+        }
+
+        spotify.getUserPlaylists().then((playlists)=>{
+          dispatch({
+            type:'SET_USER_PLAYLISTS',
+            playlists:playlists
+          })
+        })
+
+        spotify.getPlaylist('11v3udOskUFgRggoCrokJO').then(dataplaylist=>{
+          dispatch({
+            type:'GET_WEEKLY_PLAYLIST',
+            payload:dataplaylist
+          })
+          console.log(dataplaylist,'weekly')
+        })
+
+    },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        { window.localStorage.getItem('token') ? <Home spotify={spotify}/>:<Login/> }
     </div>
   );
 }
