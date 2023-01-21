@@ -12,7 +12,7 @@ const Sidebar = ({spotify}) => {
     const [{playlists},dispatch]=useDataLayerValue()
     console.log(playlists ,'play')
     return (
-    <div className=' z-[40] h-screen fixed left-0 w-[250px] bg-black overflow-y-auto  text-gray-300'>
+    <div className=' z-[40] h-screen fixed left-0 hidden md:block w-[250px] bg-black overflow-y-auto  text-gray-300'>
         <div className="content p-5">
         <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_White.png" alt="" className='w-32 ' />
         <div className="top mt-8">

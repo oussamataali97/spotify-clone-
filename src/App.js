@@ -51,11 +51,11 @@ function App() {
           console.log(dataplaylist,'weekly')
         })
 
-    },[])
+    },[token , dispatch])
 
   return (
     <div className="App">
-        { window.localStorage.getItem('token') ? <Home spotify={spotify}/>:<Login/> }
+        { token ? <Home spotify={spotify}/>:<Login/> }
     </div>
   );
 }

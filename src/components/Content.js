@@ -17,7 +17,7 @@ const downloadMusic =()=>{
   return (
 
 
-    <div className=' contente bg-gradient-to-t text-white from-amber-900 to-black'>
+    <div className=' contente bg-gradient-to-t md:ml-[250px]  text-white from-amber-900 to-black'>
       <Header/>
       <div className="container px-5 py-4 overflow-auto ">
           <div className="subHeader flex  items-end">

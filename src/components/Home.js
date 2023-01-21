@@ -6,7 +6,7 @@ import Sidebar from './Sidebar'
 const Home = ({spotify}) => {
   return (
     <div className='home'>
-      <div className="flex ">
+      <div className="flex w-full">
         <Sidebar spotify={spotify}/>
         <Content spotify={spotify}/>
 
